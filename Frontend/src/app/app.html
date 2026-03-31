@@ -1,8 +1,8 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-slate-100 font-sans">
-
+<div class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-slate-100 font-sans pb-12">
+  
   <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
     <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-2 cursor-pointer" (click)="isCreatingEvent = false">
+      <div class="flex items-center gap-2 cursor-pointer" (click)="goHome()">
         <div class="bg-gradient-to-br from-blue-500 to-cyan-400 p-2 rounded-lg text-white font-bold shadow-[0_0_10px_rgba(6,182,212,0.5)]">⚽</div>
         <div>
           <h1 class="font-bold text-xl text-white tracking-wide">ActiveCampus</h1>
@@ -14,157 +14,212 @@
           <p class="font-medium text-white">Sarah Johnson</p>
           <p class="text-sm text-slate-400">Universitatea Cluj</p>
         </div>
-        <button class="border border-slate-600 rounded-md px-3 py-1.5 text-sm hover:bg-slate-800 transition-colors">Deconectare</button>
+        <p-button label="Deconectare" severity="secondary" [outlined]="true" size="small"></p-button>
       </div>
     </div>
   </header>
 
   <main class="container mx-auto px-4 py-8">
 
-    @if (!isCreatingEvent) {
+    @if (selectedEvent) {
+      <div class="max-w-4xl mx-auto space-y-6">
+        <p-button label="Înapoi la Evenimente" icon="pi pi-arrow-left" [link]="true" (onClick)="closeEventDetails()" styleClass="p-0 mb-2 text-slate-400 hover:text-white transition-colors"></p-button>
 
+        <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl overflow-hidden">
+          <div class="relative h-64 md:h-80 w-full bg-slate-900">
+            <img [src]="selectedEvent.image" [alt]="selectedEvent.title" class="w-full h-full object-cover opacity-90">
+            <p-tag [value]="selectedEvent.category" severity="info" styleClass="absolute top-4 right-4 shadow-lg text-sm px-3 py-1"></p-tag>
+          </div>
+          
+          <div class="p-6 md:p-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">{{ selectedEvent.title }}</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
+                <div class="bg-blue-500/20 p-3 rounded-lg"><i class="pi pi-calendar text-xl text-cyan-400"></i></div>
+                <div>
+                  <p class="text-sm text-slate-400">Dată & Ora</p>
+                  <p class="font-bold text-white">{{ selectedEvent.date }}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
+                <div class="bg-purple-500/20 p-3 rounded-lg"><i class="pi pi-map-marker text-xl text-purple-400"></i></div>
+                <div>
+                  <p class="text-sm text-slate-400">Locație</p>
+                  <p class="font-bold text-white">{{ selectedEvent.location }}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50">
+                <div class="bg-emerald-500/20 p-3 rounded-lg"><i class="pi pi-users text-xl text-emerald-400"></i></div>
+                <div>
+                  <p class="text-sm text-slate-400">Disponibilitate</p>
+                  <p class="font-bold text-white">{{ selectedEvent.spaces }} locuri libere</p>
+                </div>
+              </div>
+            </div>
+
+            <p-divider styleClass="border-slate-700"></p-divider>
+
+            <div class="my-8">
+              <h2 class="text-xl font-bold text-white mb-3">Despre acest eveniment</h2>
+              <p class="text-slate-300 leading-relaxed text-lg">{{ selectedEvent.description }}</p>
+            </div>
+
+            <p-button label="Participă la Eveniment" styleClass="w-full md:w-auto bg-gradient-to-r from-blue-600 to-cyan-500 border-none px-8 py-3 text-lg font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)] hover:shadow-[0_0_25px_rgba(6,182,212,0.6)] transition-all"></p-button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl p-6">
+            <h2 class="font-bold text-lg text-white mb-6">Organizator</h2>
+            <div class="flex items-center gap-4">
+              <p-avatar [label]="selectedEvent.hostInitials" shape="circle" size="xlarge" styleClass="bg-gradient-to-br from-blue-500 to-cyan-400 text-white font-bold text-xl h-16 w-16"></p-avatar>
+              <div>
+                <h3 class="font-bold text-xl text-white">{{ selectedEvent.host }}</h3>
+                <p class="text-slate-400 text-sm mb-1">Student, Universitatea Cluj</p>
+                <div class="flex items-center gap-2">
+                  <div class="flex text-yellow-400 text-sm">
+                    <i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i>
+                  </div>
+                  <span class="text-sm text-cyan-400 font-medium">{{ selectedEvent.rating }} ({{ selectedEvent.reviews }} recenzii)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="font-bold text-lg text-white">Recenzii recente</h2>
+              <p-button label="Scrie o recenzie" severity="secondary" [outlined]="true" size="small" styleClass="text-cyan-400 border-cyan-400 hover:bg-cyan-900/30"></p-button>
+            </div>
+            <div class="space-y-4">
+              <div class="border-b border-slate-700 pb-4 last:border-0">
+                <div class="flex items-start justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="h-10 w-10 rounded-full bg-slate-700 flex items-center justify-center text-white font-bold">M</div>
+                    <div>
+                      <p class="font-bold text-slate-200 text-sm">Mihai Andrei</p>
+                      <p class="text-xs text-slate-500">Acum 2 zile</p>
+                    </div>
+                  </div>
+                  <div class="flex text-yellow-400 text-xs">
+                     <i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i><i class="pi pi-star-fill"></i>
+                  </div>
+                </div>
+                <p class="text-slate-300 text-sm ml-13">{{ selectedEvent.host }} creează un mediu grozav de joc. Recomand cu încredere evenimentele organizate de el!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    } @else if (isCreatingEvent) {
+      <div class="max-w-2xl mx-auto">
+        <p-button label="Înapoi" icon="pi pi-arrow-left" [link]="true" (onClick)="toggleCreateForm()" styleClass="p-0 mb-4 text-slate-400"></p-button>
+
+        <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl p-8">
+          <h4 class="text-2xl font-extrabold text-white mb-6">Creează Eveniment</h4>
+          
+          <form (ngSubmit)="submitEvent()" class="grid grid-cols-1 gap-6">
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-medium text-slate-300">Titlu Eveniment</label>
+              <input pInputText [(ngModel)]="newEvent.title" name="title" placeholder="ex: Meci de Tenis">
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-sm font-medium text-slate-300">Descriere</label>
+              <textarea pTextarea [(ngModel)]="newEvent.description" name="description" rows="4"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-300">Categorie</label>
+                <p-select [options]="categoryOptions" [(ngModel)]="newEvent.category" name="category" appendTo="body"></p-select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-300">Locuri Totale</label>
+                <p-inputNumber [(ngModel)]="newEvent.spaces" name="spaces" [showButtons]="true" [min]="1"></p-inputNumber>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-300">Data și Ora</label>
+                <p-datepicker [(ngModel)]="newEvent.fullDate" name="fullDate" [showTime]="true" hourFormat="24" styleClass="w-full" appendTo="body"></p-datepicker>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium text-slate-300">Locație</label>
+                <input pInputText [(ngModel)]="newEvent.location" name="location">
+              </div>
+            </div>
+
+            <div class="flex gap-3 pt-6 border-t border-slate-700">
+              <p-button label="Creează Eveniment" type="submit" styleClass="flex-1 bg-blue-600 border-none"></p-button>
+              <p-button label="Anulează" type="button" (onClick)="toggleCreateForm()" styleClass="p-button-secondary"></p-button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    } @else {
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <h2 class="text-3xl font-extrabold text-white tracking-tight">Evenimente Sportive</h2>
           <p class="text-slate-400 mt-1">Descoperă și participă la meciuri și activități fizice</p>
         </div>
-        <button (click)="toggleCreateForm()" class="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-2.5 rounded-md font-bold hover:from-blue-500 hover:to-cyan-400 transition-all shadow-[0_0_15px_rgba(59,130,246,0.4)]">
-          + Adaugă Eveniment
-        </button>
+        <p-button (onClick)="toggleCreateForm()" icon="pi pi-plus" label="Adaugă Eveniment" 
+                  styleClass="bg-gradient-to-r from-blue-600 to-cyan-500 border-none shadow-[0_0_15px_rgba(6,182,212,0.4)]"></p-button>
       </div>
 
       <div class="bg-slate-800/50 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-slate-700 mb-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input type="text" [(ngModel)]="searchText" placeholder="Caută evenimente..." class="bg-slate-900 border border-slate-700 rounded-md px-3 py-2 w-full outline-none focus:ring-2 focus:ring-cyan-500 text-white placeholder-slate-500">
-          <select [(ngModel)]="selectedCategory" class="bg-slate-900 border border-slate-700 rounded-md px-3 py-2 w-full outline-none focus:ring-2 focus:ring-cyan-500 text-white">
-            <option value="Toate Categoriile">Toate Categoriile</option>
-            <option value="Sport / Echipă">Sport / Echipă</option>
-            <option value="Sport">Sport</option>
-            <option value="Relaxare & Sport">Relaxare & Sport</option>
-          </select>
-          <select [(ngModel)]="selectedDate" class="bg-slate-900 border border-slate-700 rounded-md px-3 py-2 w-full outline-none focus:ring-2 focus:ring-cyan-500 text-white">
-            <option value="Toate Datele">Toate Datele</option>
-            <option value="Săptămâna aceasta">Săptămâna aceasta</option>
-            <option value="Luna aceasta">Luna aceasta</option>
-          </select>
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText [(ngModel)]="searchText" placeholder="Caută evenimente..." class="w-full" />
+          </span>
+          <p-select [options]="categories" [(ngModel)]="selectedCategory" class="w-full" styleClass="w-full" appendTo="body"></p-select>
+          <p-select [options]="dateOptions" [(ngModel)]="selectedDate" class="w-full" styleClass="w-full" appendTo="body"></p-select>
         </div>
       </div>
 
-      <div class="w-full rounded-lg mb-8 overflow-hidden relative group cursor-pointer shadow-lg border border-slate-700 hover:border-blue-500 transition-all h-24 md:h-32">
-        <span class="absolute top-2 right-3 bg-black/60 backdrop-blur-sm text-slate-300 text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest z-10">Reclamă</span>
-        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200&h=150" alt="Gym Membership Ad" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/50 to-transparent flex items-center px-6 md:px-12 pointer-events-none">
-          <div>
-            <p class="text-white font-extrabold text-xl md:text-3xl drop-shadow-lg tracking-tight">Abonament Student: -50%</p>
-            <p class="text-cyan-300 font-bold text-sm md:text-lg drop-shadow-md mt-1">La CityGym. Înscrie-te azi!</p>
-          </div>
+      <div class="w-full rounded-lg mb-8 overflow-hidden relative group cursor-pointer shadow-lg border border-slate-700 h-24 md:h-32">
+        <p-tag value="Reclamă" styleClass="absolute top-2 right-3 z-10 opacity-70 bg-black/60"></p-tag>
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200&h=150" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/50 to-transparent flex items-center px-12 pointer-events-none">
+            <p class="text-white font-extrabold text-xl md:text-3xl tracking-tight drop-shadow-lg">Abonament Student: -50%</p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (event of filteredEvents; track event.id) {
-          <div class="bg-slate-800 flex flex-col gap-4 rounded-xl border border-slate-700 overflow-hidden hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:border-blue-500 transition-all duration-300 cursor-pointer group pb-4">
-            <div class="relative h-48 overflow-hidden bg-slate-900">
-              <img [src]="event.image" [alt]="event.title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
-              <span class="absolute top-3 right-3 bg-blue-600 text-white px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wider shadow-md">{{ event.category }}</span>
-            </div>
-            <div class="px-4">
-              <h3 class="font-bold text-xl text-white mb-2 group-hover:text-cyan-400 transition-colors">{{ event.title }}</h3>
-              <p class="text-sm text-slate-400 mb-4 line-clamp-2">{{ event.description }}</p>
-              <div class="space-y-2 mb-4 text-sm text-slate-300 font-medium">
-                <p class="flex items-center gap-2"><span class="text-cyan-500">📅</span> {{ event.date }}</p>
-                <p class="flex items-center gap-2"><span class="text-cyan-500">📍</span> {{ event.location }}</p>
-                <p class="flex items-center gap-2"><span class="text-cyan-500">👥</span> {{ event.spaces }} locuri disponibile</p>
+          <p-card (click)="openEventDetails(event)" styleClass="h-full overflow-hidden border border-slate-700 bg-slate-800 hover:border-cyan-500 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(6,182,212,0.15)] transition-all duration-300 cursor-pointer group">
+            <ng-template pTemplate="header">
+              <div class="relative h-48 overflow-hidden bg-slate-900">
+                <img [src]="event.image" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                <p-tag [value]="event.category" severity="info" styleClass="absolute top-3 right-3 shadow-md"></p-tag>
               </div>
+            </ng-template>
+            
+            <h3 class="font-bold text-xl text-white mb-2 group-hover:text-cyan-400 transition-colors">{{ event.title }}</h3>
+            <p class="text-sm text-slate-400 mb-4 line-clamp-2">{{ event.description }}</p>
+            
+            <div class="space-y-2 mb-4 text-sm text-slate-300 font-medium">
+              <p><i class="pi pi-calendar text-cyan-500 mr-2"></i> {{ event.date }}</p>
+              <p><i class="pi pi-map-marker text-cyan-500 mr-2"></i> {{ event.location }}</p>
+              <p><i class="pi pi-users text-cyan-500 mr-2"></i> {{ event.spaces }} locuri</p>
+            </div>
+
+            <ng-template pTemplate="footer">
               <div class="flex items-center gap-3 pt-4 border-t border-slate-700 mt-auto">
-                <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-sm shadow-inner">{{ event.hostInitials }}</div>
+                <p-avatar [label]="event.hostInitials" shape="circle" size="large" styleClass="bg-gradient-to-br from-blue-500 to-cyan-400 text-white shadow-inner"></p-avatar>
                 <div>
                   <p class="text-sm font-bold text-slate-200">{{ event.host }}</p>
-                  <p class="text-xs text-blue-400">⭐ {{ event.rating }} ({{ event.reviews }} recenzii)</p>
+                  <p class="text-xs text-blue-400">⭐ {{ event.rating }} ({{ event.reviews }})</p>
                 </div>
               </div>
-            </div>
-          </div>
+            </ng-template>
+          </p-card>
         }
-      </div>
-
-    } @else {
-
-      <div class="max-w-2xl mx-auto">
-
-        <button (click)="toggleCreateForm()" class="flex items-center text-slate-400 hover:text-white transition-colors mb-6 text-sm font-medium">
-          <span class="mr-2">←</span> Înapoi la Evenimente
-        </button>
-
-        <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl overflow-hidden">
-
-          <div class="px-6 pt-6 pb-4 border-b border-slate-700">
-            <h4 class="text-2xl font-extrabold text-white">Creează Eveniment</h4>
-            <p class="text-slate-400 text-sm mt-1">Organizează o activitate sportivă pentru colegii tăi</p>
-          </div>
-
-          <div class="px-6 py-6">
-            <form (ngSubmit)="submitEvent()" class="space-y-6">
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Titlu Eveniment *</label>
-                <input [(ngModel)]="newEvent.title" name="title" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-600" placeholder="ex: Meci de Tenis" required>
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Descriere *</label>
-                <textarea [(ngModel)]="newEvent.description" name="description" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-600 min-h-[100px]" placeholder="Descrie la ce să se aștepte participanții..." required></textarea>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-2">
-                  <label class="text-sm font-medium text-slate-300">Categorie *</label>
-                  <select [(ngModel)]="newEvent.category" name="category" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500" required>
-                    <option value="Sport / Echipă">Sport / Echipă</option>
-                    <option value="Sport">Sport individual</option>
-                    <option value="Relaxare & Sport">Relaxare & Sport</option>
-                  </select>
-                </div>
-                <div class="space-y-2">
-                  <label class="text-sm font-medium text-slate-300">Locuri Totale *</label>
-                  <input type="number" [(ngModel)]="newEvent.spaces" name="spaces" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-600" min="1" required>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-2">
-                  <label class="text-sm font-medium text-slate-300">Data *</label>
-                  <input type="date" [(ngModel)]="newEvent.dateInput" name="dateInput" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 [color-scheme:dark]" required>
-                </div>
-                <div class="space-y-2">
-                  <label class="text-sm font-medium text-slate-300">Ora *</label>
-                  <input type="time" [(ngModel)]="newEvent.timeInput" name="timeInput" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 [color-scheme:dark]" required>
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">Locație *</label>
-                <input [(ngModel)]="newEvent.location" name="location" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-600" placeholder="ex: Terenul Sintetic" required>
-              </div>
-
-              <div class="space-y-2">
-                <label class="text-sm font-medium text-slate-300">URL Imagine (Opțional)</label>
-                <input type="url" [(ngModel)]="newEvent.imageUrl" name="imageUrl" class="w-full bg-slate-900 border border-slate-700 rounded-md px-3 py-2 text-white outline-none focus:ring-2 focus:ring-cyan-500 placeholder-slate-600" placeholder="https://...">
-                <p class="text-xs text-slate-500">Dacă lași gol, vom folosi o imagine implicită.</p>
-              </div>
-
-              <div class="flex gap-3 pt-4 border-t border-slate-700">
-                <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-4 py-2 rounded-md font-bold hover:from-blue-500 hover:to-cyan-400 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                  Creează Eveniment
-                </button>
-                <button type="button" (click)="toggleCreateForm()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-md font-medium transition-colors border border-slate-600">
-                  Anulează
-                </button>
-              </div>
-
-            </form>
-          </div>
-        </div>
       </div>
     }
   </main>
