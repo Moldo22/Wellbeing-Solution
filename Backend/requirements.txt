@@ -3,3 +3,4 @@ python-dotenv
 djangorestframework
 djangorestframework-stubs
 django-cors-headers
+django-phonenumber-field[phonenumbers]

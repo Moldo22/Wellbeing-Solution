@@ -14,14 +14,6 @@ def home(request):
 def hello_there(request, name):
     # function just for test, may be removed
 
-    user = User.objects.create_user(
-        username="testuser1",
-        email="test1@example.com",
-        password="test12345",
-        city="Cluj",
-        country="Romania"
-    )
-
     now = datetime.now()
     formatted_now = now.strftime("%A, %d %B, %Y at %X")
 

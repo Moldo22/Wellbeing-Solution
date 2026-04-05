@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'Users',
-    'Events'
+    'Events',
+    "phonenumber_field"
 ]
 
 AUTH_USER_MODEL = "Users.User"
