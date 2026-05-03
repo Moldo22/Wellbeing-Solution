@@ -1,0 +1,81 @@
+<div class="page">
+
+  <!-- HEADER (ideal ar trebui în layout, dar îl las aici dacă îl folosești local) -->
+  <header class="header">
+    <div class="logo" (click)="goHome()">
+      <div class="icon">⚽</div>
+      <div>
+        <h1>ActiveCampus</h1>
+        <p>Platformă Sportivă Studențească</p>
+      </div>
+    </div>
+
+    <div class="user">
+      <div class="info">
+        <p>Sarah Johnson</p>
+        <span>Universitatea Cluj</span>
+      </div>
+      <button (click)="toggleLogin()">Deconectare</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- TITLE + CREATE -->
+    <div class="top-bar">
+      <div>
+        <h2>Evenimente Sportive</h2>
+        <p>Descoperă și participă la meciuri și activități fizice</p>
+      </div>
+
+      <button (click)="toggleCreateForm()">Adaugă Eveniment</button>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+      <input type="text" [(ngModel)]="searchText" placeholder="Caută evenimente..." />
+
+      <select [(ngModel)]="selectedCategory">
+        <option *ngFor="let c of categories" [value]="c.value">{{ c.label }}</option>
+      </select>
+
+      <select [(ngModel)]="selectedDate">
+        <option *ngFor="let d of dateOptions" [value]="d.value">{{ d.label }}</option>
+      </select>
+    </div>
+
+    <!-- ADS -->
+    <div class="ad">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" />
+      <div class="ad-text">Abonament Student: -50%</div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="grid">
+
+      <div class="card" *ngFor="let event of filteredEvents" (click)="openEventDetails(event)">
+
+        <img [src]="event.image" />
+
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+
+        <div class="meta">
+          <span>📅 {{ event.date }}</span>
+          <span>📍 {{ event.location }}</span>
+          <span>👥 {{ event.spaces }}</span>
+        </div>
+
+        <div class="footer">
+          <div class="avatar">{{ event.hostInitials }}</div>
+          <div>
+            <strong>{{ event.host }}</strong>
+            <small>⭐ {{ event.rating }} ({{ event.reviews }})</small>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>

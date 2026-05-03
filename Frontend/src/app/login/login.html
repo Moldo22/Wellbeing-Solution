@@ -1,1 +1,32 @@
-<p>login works!</p>
+<div class="container">
+  <div class="card">
+    <h2>Login</h2>
+    <p class="subtitle">Bine ai venit! Autentifică-te în cont</p>
+
+    <form (ngSubmit)="onLogin()">
+      <label>Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="introdu email"
+        required
+      />
+
+      <label>Parolă</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="introdu parola"
+        required
+      />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="footer">
+      <a routerLink="/register">Creează unul</a>
+    </p>
+  </div>
+</div>

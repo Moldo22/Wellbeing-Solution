@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -11,30 +11,46 @@ import { AvatarModule } from 'primeng/avatar';
 import { TextareaModule } from 'primeng/textarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DatePickerModule } from 'primeng/datepicker';
-import { DividerModule } from 'primeng/divider'; // <-- NEW IMPORT
+import { DividerModule } from 'primeng/divider';
+import { Login } from "./login/login";
+import { Router } from '@angular/router';
+// import { RouterOutlet } from "../../node_modules/@angular/router/types/_router_module-chunk"; // <-- NEW IMPORT
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    ButtonModule, 
-    InputTextModule, 
-    SelectModule, 
-    CardModule, 
-    TagModule, 
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    InputTextModule,
+    SelectModule,
+    CardModule,
+    TagModule,
     AvatarModule,
     TextareaModule,
     InputNumberModule,
     DatePickerModule,
     DividerModule // <-- ADDED HERE
-  ],
+    ,
+    Login,
+    RouterModule
+],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('Frontend');
+  
+  showLogin = false;
+
+  constructor(private router: Router) {}
+
+  toggleLogin() {
+    this.showLogin = !this.showLogin;
+    this.router.navigate(['/login']);
+  }
+  
   
   // --- STATE VARIABLES ---
   isCreatingEvent = false;

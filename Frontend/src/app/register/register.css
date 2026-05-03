@@ -3,40 +3,33 @@
   font-family: Arial, sans-serif;
 }
 
-body {
-  margin: 0;
-}
-
 .container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
 }
 
 .card {
   width: 340px;
-  background: #ffffff;
+  background: white;
   padding: 30px;
   border-radius: 14px;
 
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.4s ease-in-out;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
 h2 {
-  margin: 0;
   text-align: center;
-  font-size: 26px;
-  color: #333;
+  margin-bottom: 5px;
 }
 
 .subtitle {
   text-align: center;
   font-size: 13px;
-  color: #777;
+  color: gray;
   margin-bottom: 20px;
 }
 
@@ -56,12 +49,11 @@ input {
   border-radius: 8px;
 
   outline: none;
-  transition: 0.2s;
 }
 
 input:focus {
-  border-color: #4facfe;
-  box-shadow: 0 0 5px rgba(79, 172, 254, 0.4);
+  border-color: #38f9d7;
+  box-shadow: 0 0 5px rgba(56, 249, 215, 0.5);
 }
 
 button {
@@ -72,47 +64,22 @@ button {
   border: none;
   border-radius: 8px;
 
-  background: #4facfe;
+  background: #00c9a7;
   color: white;
-  font-size: 15px;
-
   cursor: pointer;
-  transition: 0.2s;
 }
 
 button:hover {
-  background: #2196f3;
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: scale(0.98);
+  background: #00b39b;
 }
 
 .footer {
-  margin-top: 15px;
   text-align: center;
   font-size: 12px;
-  color: #666;
+  margin-top: 15px;
 }
 
 .footer a {
-  color: #4facfe;
+  color: #00c9a7;
   text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-/* mic efect de intrare */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
