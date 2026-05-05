@@ -3,116 +3,13 @@
   font-family: Arial, sans-serif;
 }
 
-body {
-  margin: 0;
-}
-
-.container {
+.login {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
 }
 
-.card {
-  width: 340px;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 14px;
-
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.4s ease-in-out;
-}
-
-h2 {
-  margin: 0;
-  text-align: center;
-  font-size: 26px;
-  color: #333;
-}
-
-.subtitle {
-  text-align: center;
-  font-size: 13px;
-  color: #777;
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-top: 12px;
-  font-size: 12px;
-  color: #555;
-}
-
-input {
-  width: 100%;
-  padding: 11px;
-  margin-top: 5px;
-
-  border: 1px solid #ddd;
-  border-radius: 8px;
-
-  outline: none;
-  transition: 0.2s;
-}
-
-input:focus {
-  border-color: #4facfe;
-  box-shadow: 0 0 5px rgba(79, 172, 254, 0.4);
-}
-
-button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 11px;
-
-  border: none;
-  border-radius: 8px;
-
-  background: #4facfe;
-  color: white;
-  font-size: 15px;
-
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: #2196f3;
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-.footer {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-}
-
-.footer a {
-  color: #4facfe;
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-/* mic efect de intrare */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.login-card {
+  width: 380px;
 }

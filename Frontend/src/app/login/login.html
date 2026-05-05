@@ -1,32 +1,38 @@
-<div class="container">
-  <div class="card">
-    <h2>Login</h2>
-    <p class="subtitle">Bine ai venit! Autentifică-te în cont</p>
-
-    <form (ngSubmit)="onLogin()">
-      <label>Email</label>
-      <input
-        type="email"
-        [(ngModel)]="email"
-        name="email"
-        placeholder="introdu email"
-        required
-      />
-
-      <label>Parolă</label>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        name="password"
-        placeholder="introdu parola"
-        required
-      />
-
-      <button type="submit">Login</button>
+<div class="login">
+  <p-card class="login-card">
+    <ng-template pTemplate="title">
+      Welcome!
+    </ng-template>
+    <ng-template pTemplate="subtitle">
+      Log into your account.
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button pButton type="button" routerLink="/register">Register</button>
+    </ng-template>
+    <form (ngSubmit)="onLogin()" class="form">
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          pInputText
+          [(ngModel)]="email"
+          name="email"
+          required
+          placeholder="introdu email"
+        />
+      </div>
+      <div class="field">
+        <p-floatlabel variant="on">
+          <p-password
+            inputId="password"
+            [(ngModel)]="password"
+            [toggleMask]="true"
+            [feedback]="false"
+          ></p-password>
+          <label for="password">Password:</label>
+        </p-floatlabel>
+      </div>
+      <button pButton type="submit" class="login-button">Login</button>
     </form>
-
-    <p class="footer">
-      <a routerLink="/register">Creează unul</a>
-    </p>
-  </div>
+  </p-card>
 </div>
