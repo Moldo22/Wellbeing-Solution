@@ -2,37 +2,41 @@ import re
 from django.utils.timezone import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework.views import APIView
 
 from Users.models import User
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import EmailTokenObtainPairSerializer, RegisterSerializer, UserListSerializer
+from rest_framework import generics, status
+from rest_framework.response import Response
+
+class EmailTokenObtainPairView(TokenObtainPairView):
+    serializer_class = EmailTokenObtainPairSerializer
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        # Generate JWT token
+        refresh = RefreshToken.for_user(user)
+
+        return Response({
+            "user": serializer.data,
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+        }, status=status.HTTP_201_CREATED)
 
 
-# Create your views here.
-def home(request):
-    return HttpResponse("Hello world!")
+class UserListView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserListSerializer(users, many=True)
 
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
-def hello_there(request, name):
-    # function just for test, may be removed
-
-    user = User.objects.create_user(
-        username="testuser1",
-        email="test1@example.com",
-        password="test12345",
-        city="Cluj",
-        country="Romania"
-    )
-
-    now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X")
-
-    # Filter the name argument to letters only using regular expressions. URL arguments
-    # can contain arbitrary text, so we restrict to safe characters only.
-    match_object = re.match("[a-zA-Z]+", name)
-
-    if match_object:
-        clean_name = match_object.group(0)
-    else:
-        clean_name = "Friend"
-
-    content = "Hello there, " + clean_name + "! It's " + formatted_now
-    return HttpResponse(content)
