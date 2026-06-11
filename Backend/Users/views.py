@@ -10,6 +10,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import EmailTokenObtainPairSerializer, RegisterSerializer, UserListSerializer
 from rest_framework import generics, status
 from rest_framework.response import Response
+import os
+import json
+from django.http import JsonResponse
+from django.conf import settings
+
 
 class EmailTokenObtainPairView(TokenObtainPairView):
     serializer_class = EmailTokenObtainPairSerializer
@@ -40,3 +45,17 @@ class UserListView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+def get_profile(request):
+    # Găsim calea exactă către fișierul tău safe de pe PC
+    json_path = os.path.join( 'date.json')
+    
+    try:
+        with open(json_path, 'r', encoding='utf-8') as file:
+            # Parsăm fișierul ca obiect Python (dict)
+            data = json.load(file)
+        
+        # Trimitem datele înapoi securizat către browser sub formă de JSON
+        return JsonResponse(data, safe=False)
+        
+    except FileNotFoundError:
+        return JsonResponse({'error': 'Fișierul securizat nu a fost găsit.'}, status=404)

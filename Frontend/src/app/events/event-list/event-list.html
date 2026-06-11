@@ -1,6 +1,5 @@
 <div class="page">
 
-  <!-- HEADER (ideal ar trebui în layout, dar îl las aici dacă îl folosești local) -->
   <header class="header">
     <div class="logo" (click)="goHome()">
       <div class="icon">⚽</div>
@@ -21,7 +20,6 @@
 
   <main class="container">
 
-    <!-- TITLE + CREATE -->
     <div class="top-bar">
       <div>
         <h2>Evenimente Sportive</h2>
@@ -31,51 +29,86 @@
       <button (click)="toggleCreateForm()">Adaugă Eveniment</button>
     </div>
 
-    <!-- FILTERS -->
     <div class="filters">
       <input type="text" [(ngModel)]="searchText" placeholder="Caută evenimente..." />
 
       <select [(ngModel)]="selectedCategory">
-        <option *ngFor="let c of categories" [value]="c.value">{{ c.label }}</option>
+        @for (c of categories; track c.value) {
+          <option [value]="c.value">{{ c.label }}</option>
+        }
       </select>
 
       <select [(ngModel)]="selectedDate">
-        <option *ngFor="let d of dateOptions" [value]="d.value">{{ d.label }}</option>
+        @for (d of dateOptions; track d.value) {
+          <option [value]="d.value">{{ d.label }}</option>
+        }
       </select>
     </div>
 
-    <!-- ADS -->
-    <div class="ad">
-      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" />
-      <div class="ad-text">Abonament Student: -50%</div>
-    </div>
-
-    <!-- EVENTS -->
-    <div class="grid">
-
-      <div class="card" *ngFor="let event of filteredEvents" (click)="openEventDetails(event)">
-
-        <img [src]="event.image" />
-
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.description }}</p>
-
-        <div class="meta">
-          <span>📅 {{ event.date }}</span>
-          <span>📍 {{ event.location }}</span>
-          <span>👥 {{ event.spaces }}</span>
-        </div>
-
-        <div class="footer">
-          <div class="avatar">{{ event.hostInitials }}</div>
-          <div>
-            <strong>{{ event.host }}</strong>
-            <small>⭐ {{ event.rating }} ({{ event.reviews }})</small>
+    <aside class="promo-carousel-auto">
+      <div class="carousel-track">
+        
+        @if (currentSlide === 0) {
+          <div class="carousel-slide">
+            <div class="banner-image">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" alt="Sală gym">
+            </div>
+            <div class="banner-content">
+              <div class="banner-text-row">
+                <span class="banner-badge">Ofertă</span>
+                <h3 class="banner-title">Abonament Premium -50%</h3>
+              </div>
+              <p class="banner-description">Acces nelimitat în campus.</p>
+            </div>
+            <button class="btn-banner" (click)="openPromo(0)">Detalii</button>
           </div>
-        </div>
+        }
+
+        @if (currentSlide === 1) {
+          <div class="carousel-slide">
+            <div class="banner-image">
+              <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987" alt="Echipament">
+            </div>
+            <div class="banner-content">
+              <div class="banner-text-row">
+                <span class="banner-badge magazin">Shop</span>
+                <h3 class="banner-title">Echipament Oficial Nou</h3>
+              </div>
+              <p class="banner-description">Vezi colecția de sezon.</p>
+            </div>
+            <button class="btn-banner" (click)="openPromo(1)">Shop</button>
+          </div>
+        }
 
       </div>
+    </aside>
 
-    </div>
-  </main>
-</div>
+    <div class="grid-compact">
+
+      @for (event of filteredEvents; track event.id) {
+        <div class="card-mini" (click)="openEventDetails(event)">
+          
+          <div class="card-thumbnail">
+            <img [src]="event.image" />
+          </div>
+
+          <div class="card-details">
+            <h3>{{ event.title }}</h3>
+            
+            <div class="meta-inline">
+              <span>📅 {{ event.date }}</span>
+              <span>📍 {{ event.location }}</span>
+            </div>
+
+            <div class="card-footer-mini">
+              <div class="avatar-mini">{{ event.hostInitials }}</div>
+              <div class="host-info">
+                <strong>{{ event.host }}</strong>
+                <small>⭐ {{ event.rating }}</small>
+              </div>
+              <span class="spaces-badge">👥 {{ event.spaces }} locuri</span>
+            </div>
+          </div>
+
+        </div>
+      } @empty {}
