@@ -1,1 +1,94 @@
-<p>event-details works!</p>
+<div class="event-details-container">
+  
+  <div class="page-header-web">
+    <div class="title-area">
+      <a href="/home" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Dashboard
+      </a>
+      <div class="sport-badge-wrapper">
+        <span class="sport-tag">{{ event.sport | uppercase }}</span>
+        <span class="skill-badge">{{ event.skill_level | titlecase }}</span>
+      </div>
+      <h1>{{ event.title || 'Loading Match...' }}</h1>
+    </div>
+    
+    <div class="action-zone">
+      <span class="status-badge">Upcoming</span>
+    </div>
+  </div>
+
+  <div class="details-grid">
+    
+    <div class="main-info-zone">
+      <div class="info-card">
+        <h2>About the Match</h2>
+        <p class="description-text">
+          {{ event.description || 'No description provided for this event.' }}
+        </p>
+      </div>
+
+      <div class="info-card">
+        <h2>Location Details</h2>
+        <div class="location-box">
+          <div class="location-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="location-text">
+            <strong>{{ event.street_address || 'TBD Venue' }}</strong>
+            <span>{{ event.city }}, {{ event.country }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-sidebar">
+      <div class="sticky-widget">
+        
+        <div class="widget-card">
+          <div class="widget-header">
+            <div class="date-big">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>{{ event.start_time ? (event.start_time | date:'EEEE, d MMMM yyyy') : 'Date TBD' }}</span>
+            </div>
+            <div class="time-big">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>{{ event.start_time ? (event.start_time | date:'HH:mm') : '--:--' }}</span>
+            </div>
+          </div>
+
+          <hr class="widget-divider" />
+
+          <div class="slots-tracker">
+            <div class="slots-labels">
+              <span class="availability-status">Available Spots</span>
+              <span class="slots-counter"><strong>event.</strong> / {{ event.max_participants }}</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-fill" [style.width.%]="(8 / event.max_participants) * 100"></div>
+            </div>
+          </div>
+
+          <div class="organizer-box">
+            <div class="avatar">AP</div>
+            <div class="org-details">
+              <small>Hosted by</small>
+              <strong>{{ event.creator }}</strong>
+            </div>
+          </div>
+
+          <button type="button" class="btn-join" (click)="onJoinMatch()">
+            Particip
+          </button>
+          
+        </div> <div class="tip-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          By joining, you commit to showing up. Please cancel at least 2 hours in advance if you can't make it.
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

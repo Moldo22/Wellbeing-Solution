@@ -149,6 +149,10 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+  margin-bottom: 18px;
+}
+.form-row-2col:last-child {
+  margin-bottom: 0;
 }
 
 .form-actions {
@@ -231,7 +235,7 @@ body {
   overflow: hidden;
   display: flex;
   padding: 16px;
-  height: 150px;
+  min-height: 160px;
   align-items: center;
   box-sizing: border-box;
   margin-bottom: 20px;
@@ -252,9 +256,10 @@ body {
 }
 
 .card-thumbnail-placeholder span {
-  font-size: 10px;
-  color: #475569;
-  font-weight: 600;
+  font-size: 11px;
+  color: #38bdf8;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .card-details-preview {
@@ -263,7 +268,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  height: 115px;
+  min-height: 125px;
 }
 
 .card-details-preview h3 {
@@ -283,11 +288,21 @@ body {
   font-weight: 600;
 }
 
+.location-preview-mini {
+  font-size: 11px;
+  color: #475569;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .card-footer-mini-preview {
   display: flex;
   align-items: center;
   font-size: 12px;
   gap: 10px;
+  margin-top: 8px;
 }
 
 .avatar-mini-preview {
@@ -362,6 +377,7 @@ body {
   .form-row-2col {
     grid-template-columns: 1fr;
     gap: 0;
+    margin-bottom: 0;
   }
   .preview-sidebar {
     margin-top: 40px;

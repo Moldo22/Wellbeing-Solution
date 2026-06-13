@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import EventListView, EventCreateView
+from .views import EventListView, EventCreateView, EventDetailAPIView
 
 urlpatterns = [
 
@@ -24,6 +24,8 @@ urlpatterns = [
 
     path("", EventListView.as_view(), name="event-list"),
 
+    path('<int:pk>/', EventDetailAPIView.as_view(), name='event-detail'),
+    
 
     # CREATE
     #   JSON + Token expected for event creation:

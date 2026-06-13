@@ -8,7 +8,7 @@ from Users.models import User
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import EmailTokenObtainPairSerializer, RegisterSerializer, UserListSerializer
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 import os
 import json
@@ -59,3 +59,14 @@ def get_profile(request):
         
     except FileNotFoundError:
         return JsonResponse({'error': 'Fișierul securizat nu a fost găsit.'}, status=404)
+    
+class UserMeView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "email": user.email,
+            "name": user.get_full_name(),
+            "username": user.username
+        })

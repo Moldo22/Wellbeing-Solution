@@ -16,4 +16,5 @@ ngAfterViewInit(): void {
     .catch(err => console.error('Serverul Django este oprit sau are erori:', err));
 }
 
+
 }

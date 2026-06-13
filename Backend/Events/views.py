@@ -33,3 +33,15 @@ class EventCreateView(generics.CreateAPIView):
     #automatically assign creator
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+
+class EventDetailAPIView(generics.RetrieveAPIView):
+    """
+    Afișează detaliile unui singur eveniment selectat.
+    """
+    queryset = Event.objects.all()
+    serializer_class = EventReadSerializer
+    
+    # Opțional: Implicit, Django caută în URL parametrul numit 'pk'. 
+    # Dacă vrei ca în URL să scrii 'id', adaugi linia de mai jos:
+    #lookup_field = 'id'

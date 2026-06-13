@@ -11,7 +11,8 @@
 
     <div class="user">
       <div class="info">
-        <p>Sarah Johnson</p>
+        <p>{{ this.name }}</p>
+        
         <span>Universitatea Cluj</span>
       </div>
       <button (click)="toggleLogin()">Deconectare</button>
@@ -85,30 +86,48 @@
 
     <div class="grid-compact">
 
+      @if (filteredEvents.length === 0) {
+  <div class="loading">
+    Loading events...
+  </div>
+}
       @for (event of filteredEvents; track event.id) {
-        <div class="card-mini" (click)="openEventDetails(event)">
-          
-          <div class="card-thumbnail">
-            <img [src]="event.image" />
-          </div>
+  <div class="card-mini" (click)="openEventDetails(event)">
 
-          <div class="card-details">
-            <h3>{{ event.title }}</h3>
-            
-            <div class="meta-inline">
-              <span>📅 {{ event.date }}</span>
-              <span>📍 {{ event.location }}</span>
-            </div>
+    <div class="card-thumbnail">
+      <img [src]="event.image" alt="event image" />
+    </div>
 
-            <div class="card-footer-mini">
-              <div class="avatar-mini">{{ event.hostInitials }}</div>
-              <div class="host-info">
-                <strong>{{ event.host }}</strong>
-                <small>⭐ {{ event.rating }}</small>
-              </div>
-              <span class="spaces-badge">👥 {{ event.spaces }} locuri</span>
-            </div>
-          </div>
+    <div class="card-details">
 
+      <h3>{{ event.title }}</h3>
+
+      <div class="meta-inline">
+        <span>📅 {{ event.date }}</span>
+        <span>📍 {{ event.location }}</span>
+      </div>
+
+      <p class="desc">
+        {{ event.description }}
+      </p>
+
+      <div class="card-footer-mini">
+
+        <div class="avatar-mini">
+          {{ event.hostInitials }}
         </div>
-      } @empty {}
+
+        <div class="host-info">
+          <strong>{{ event.host }}</strong>
+          <small>⭐ {{ event.rating }}</small>
+        </div>
+
+        <span class="spaces-badge">
+          👥 {{ event.spaces }} locuri
+        </span>
+
+      </div>
+
+    </div>
+  </div>
+} @empty {}
