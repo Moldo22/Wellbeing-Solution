@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator
 class Event(models.Model):
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE, #if creator deleted => delete events too
         related_name="created_events"
     )
     title = models.CharField(max_length=200)
