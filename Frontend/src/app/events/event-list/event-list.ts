@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
   templateUrl: './event-list.html',
   styleUrls: ['./event-list.css']
 })
-export class EventList {
+export class EventList implements OnInit, OnDestroy {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   searchText = '';
   selectedCategory = '';
@@ -89,4 +89,39 @@ export class EventList {
   openEventDetails(event: any) {
     console.log('open event', event);
   }
-}
+
+currentSlide: number = 0;
+  totalSlides: number = 2;
+  carouselTimer: any;
+
+  ngOnInit() {
+    this.startAutoPlay();
+  }
+
+  ngOnDestroy() {
+    this.stopAutoPlay();
+  }
+
+  startAutoPlay() {
+    this.stopAutoPlay();
+
+    this.carouselTimer = setInterval(() => {
+      this.nextSlide();
+    }, 5000);
+  }
+
+  stopAutoPlay() {
+    if (this.carouselTimer) {
+      clearInterval(this.carouselTimer);
+    }
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    this.cdr.detectChanges();
+    console.log('Caruselul a schimbat automat la slide-ul:', this.currentSlide);
+  }
+
+  openPromo(index: number) { 
+    console.log('Utilizatorul a apăsat pe detalii pentru reclama:', index); 
+  }}

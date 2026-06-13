@@ -1,1 +1,129 @@
-<p>event-create works!</p>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Event - Admin Workspace</title>
+</head>
+<body>
+
+  <div class="create-event-container">
+    
+    <div class="page-header-web">
+      <div class="title-area">
+        <a href="#" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Dashboard
+        </a>
+        <h1>Create Wellbeing Event</h1>
+        <p>Configure and launch a new activity for the community</p>
+      </div>
+      
+      <div class="action-zone">
+        <span class="role-badge">Admin Mode</span>
+      </div>
+    </div>
+
+    <div class="workspace-grid">
+      
+      <form class="event-form">
+        
+        <div class="form-section">
+          <h2>1. Basic Information</h2>
+          
+          <div class="input-group">
+            <label for="event-title">Event Title</label>
+            <input type="text" id="event-title" placeholder="e.g., Morning Run in the Park, Advanced Yoga Session...">
+          </div>
+
+          <div class="input-group">
+            <label for="event-desc">Description</label>
+            <textarea id="event-desc" rows="4" placeholder="Describe the activity, target audience, what to bring..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>2. Time & Logistics</h2>
+          
+          <div class="form-row-2col">
+            <div class="input-group">
+              <label for="event-date">Date & Time</label>
+              <input type="datetime-local" id="event-date">
+            </div>
+            
+            <div class="input-group">
+              <label for="event-category">Category</label>
+              <select id="event-category">
+                <option value="sport">Sport & Fitness</option>
+                <option value="mental">Mental Health & Relaxing</option>
+                <option value="nutrition">Nutrition & Wellbeing</option>
+                <option value="team">Team Building</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2col">
+            <div class="input-group">
+              <label for="event-slots">Available Slots (Spaces)</label>
+              <input type="number" id="event-slots" placeholder="e.g., 15" min="1">
+            </div>
+            
+            <div class="input-group">
+              <label for="event-location">Location / Link</label>
+              <input type="text" id="event-location" placeholder="e.g., Central Park Lake or Zoom Link">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary">Save Draft</button>
+          <button type="submit" class="btn-primary">Publish Event</button>
+        </div>
+
+      </form>
+
+      <div class="preview-sidebar">
+        <div class="sticky-preview">
+          <div class="preview-tag">Live Preview</div>
+          
+          <div class="card-mini-preview">
+            <div class="card-thumbnail-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: #475569;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Image Thumbnail</span>
+            </div>
+            
+            <div class="card-details-preview">
+              <div>
+                <div class="meta-inline-preview">
+                  <span id="preview-date">📅 Select Date & Time</span>
+                </div>
+                <h3 id="preview-title">Your Awesome Event Title</h3>
+                <p id="preview-text-content" style="color: #64748b; font-size: 13px; margin: 6px 0 0 0; line-height: 1.4;">
+                  The description you type in the form will automatically populate here...
+                </p>
+              </div>
+
+              <div class="card-footer-mini-preview">
+                <div class="avatar-mini-preview">AP</div>
+                <div class="host-info-preview">
+                  <strong>Andrei Popescu</strong>
+                  <small>Organizer (Admin)</small>
+                </div>
+                <span class="spaces-badge-preview" id="preview-spaces">0 spaces left</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            As an Admin, publishing this will instantly alert users tracking the chosen category.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
