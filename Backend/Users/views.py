@@ -70,3 +70,10 @@ class UserMeView(APIView):
             "name": user.get_full_name(),
             "username": user.username
         })
+    
+class UserProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserListSerializer(request.user)
+        return Response(serializer.data)

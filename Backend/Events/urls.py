@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import EventListView, EventCreateView, EventDetailAPIView
+from .views import EventListView, EventCreateView, EventDetailAPIView, EventJoinUserView, UserEventsView, EventParticipantsView
 
 urlpatterns = [
 
@@ -41,4 +41,11 @@ urlpatterns = [
     #     "skill_level": "intermediate"
     #     }
     path("create/", EventCreateView.as_view(), name="event-create"),
+
+    path("<int:event_id>/join/", EventJoinUserView.as_view(), name="event-join"),
+
+    path("profile/", UserEventsView.as_view()),
+
+    path("<int:event_id>/participants/", EventParticipantsView.as_view(), name = "event-participants")
+
 ]

@@ -20,11 +20,11 @@
 
         <div class="info">
           <div class="name-row">
-            <h1>Andrei Popescu</h1>
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
             <span class="role-badge">Admin</span>
           </div>
-          <p>@andreidev</p>
-          <p>Wellbeing • Sport • Mental health</p>
+          <p>{{ user.email }}</p>
+          <p>{{user.bio}}</p>
         </div>
 
         <button class="btn">Edit Profile</button>
@@ -32,12 +32,12 @@
 
       <div class="stats">
         <div class="card">
-          <h2>18</h2>
+          <h2>{{user.events_created}}</h2>
           <p>Events Created</p>
         </div>
 
         <div class="card">
-          <h2>42</h2>
+          <h2>{{user.events_joined}}</h2>
           <p>Events Joined</p>
         </div>
 
@@ -53,10 +53,11 @@
           <div class="section">
             <h2>Favorite Sports</h2>
             <div class="tags">
-              <span>Running</span>
-              <span>Gym</span>
-              <span>Yoga</span>
-              <span>Cycling</span>
+              @for (sport of user.favorite_sports; track sport) {
+                <span>
+                  {{ sport }}
+                </span>
+              }
             </div>
           </div>
 
@@ -90,7 +91,7 @@
           </div>
         </div>
 
-        <div class="column">
+        <!-- <div class="column">
           <div class="section">
             <div class="section-header-web">
               <h2>Recent Events</h2>
@@ -110,8 +111,106 @@
               <p>Relaxing breathing & stretching.</p>
             </div>
           </div>
-        </div>
+        </div> -->
 
+        @if (showReviewDialog) {
+          <div class="modal-backdrop" (click)="showReviewDialog = false"></div>
+
+          <div class="modal">
+            <h2>Rate participants for {{ selectedEvent.title }}</h2>
+
+            @for (user of participants; track user.id) {
+              <div class="review-user">
+
+                <div class="name">
+                  {{ user.name }}
+                </div>
+
+                <!-- rating -->
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  [(ngModel)]="user.rating"
+                  placeholder="Rating (1-5)"
+                />
+
+                <!-- comment -->
+                <input
+                  type="text"
+                  [(ngModel)]="user.comment"
+                  placeholder="Comment (optional)"
+                />
+
+              </div>
+            }
+
+            <button (click)="submitReviews()">Submit Reviews</button>
+            <!-- <button>Submit Reviews</button> -->
+          </div>
+        }
+
+        <div class="column">
+
+          <!-- UPCOMING EVENTS -->
+          <div class="section">
+
+            <div class="section-header-web">
+              <h2>Upcoming Events</h2>
+            </div>
+
+            @if (user.upcoming_events.length) {
+
+              @for (event of user.upcoming_events; track event.id) {
+                <div class="event">
+                  <h3>{{ event.title }}</h3>
+                  <p>{{ event.description || 'No description available.' }}</p>
+
+                  <small>
+                    {{ event.sport }} •
+                    {{ event.start_time | date:'medium' }} •
+                    {{ event.city }}
+                  </small>
+                </div>
+              }
+
+            } @else {
+              <p class="empty-state">No upcoming events.</p>
+            }
+
+          </div>
+
+
+          <!-- PAST EVENTS -->
+          <div class="section">
+
+            <div class="section-header-web">
+              <h2>Past Events</h2>
+            </div>
+
+            @if (user.past_events.length) {
+
+              @for (event of user.past_events; track event.id) {
+                <div class="event past" (click)="openReviewDialog(event)">
+                  <h3>{{ event.title }}</h3>
+                  <p>{{ event.description || 'No description available.' }}</p>
+
+                  <small>
+                    {{ event.sport }} •
+                    {{ event.start_time | date:'medium' }} •
+                    {{ event.city }}
+                  </small>
+                </div>
+              }
+
+            } @else {
+              <p class="empty-state">No past events.</p>
+            }
+
+          </div>
+
+        </div>
+        
       </div>
 
     </div>

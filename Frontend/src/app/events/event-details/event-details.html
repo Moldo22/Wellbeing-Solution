@@ -1,5 +1,9 @@
 <div class="event-details-container">
-  
+  @if (showToastVisible) {
+    <div class="toast">
+      {{ toastMessage }}
+    </div>
+  }
   <div class="page-header-web">
     <div class="title-area">
       <a href="/home" class="back-link">
@@ -13,11 +17,13 @@
       <h1>{{ event.title || 'Loading Match...' }}</h1>
     </div>
     
+    
     <div class="action-zone">
       <span class="status-badge">Upcoming</span>
     </div>
   </div>
 
+  
   <div class="details-grid">
     
     <div class="main-info-zone">
@@ -61,11 +67,11 @@
 
           <div class="slots-tracker">
             <div class="slots-labels">
-              <span class="availability-status">Available Spots</span>
-              <span class="slots-counter"><strong>event.</strong> / {{ event.max_participants }}</span>
+              <span class="availability-status">Joined players</span>
+              <span class="slots-counter"><strong>{{event.participants.length}}</strong> / {{ event.max_participants }}</span>
             </div>
             <div class="progress-bar-container">
-              <div class="progress-fill" [style.width.%]="(8 / event.max_participants) * 100"></div>
+              <div class="progress-fill" [style.width.%]="(event.participants.length / event.max_participants) * 100"></div>
             </div>
           </div>
 
@@ -92,3 +98,4 @@
   </div>
 
 </div>
+

@@ -345,3 +345,32 @@
     margin-top: 30px;
   }
 }
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  background: rgba(20, 27, 45, 0.95);
+  color: #f1f5f9;
+
+  padding: 22px 32px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+
+  z-index: 9999;
+
+  animation: popupFade 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

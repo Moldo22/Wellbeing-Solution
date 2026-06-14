@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from rest_framework_simplejwt.views import TokenRefreshView
-from .views import EmailTokenObtainPairView, RegisterView, UserListView, UserMeView
+from .views import EmailTokenObtainPairView, RegisterView, UserListView, UserMeView,UserProfileView
 
 urlpatterns = [
 
@@ -15,6 +15,8 @@ urlpatterns = [
 
     path("me/", UserMeView.as_view(), name="me"),
 
+    path("profile/", UserProfileView.as_view(), name="profile"),
+    
     # REFRESH TOKEN
     path("refresh/", TokenRefreshView.as_view(), name="refresh"),
 
@@ -33,6 +35,7 @@ urlpatterns = [
     #     "favorite_sports": ["football", "tennis", "basketball"]
     #     }
     path("register/", RegisterView.as_view(), name="register"),
+
 
     #url only for test purposes
     path("all/", UserListView.as_view(), name="user-list"),

@@ -15,6 +15,15 @@ export class EventList implements OnInit, OnDestroy {
   constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   name = '';
+  token = localStorage.getItem("accessToken");
+
+  //pagination
+
+  nextPage: string | null = null;
+  previousPage: string | null = null;
+  totalEvents = 0;
+
+
 ngOnInit() {
   this.startAutoPlay();
   this.loadEvents();
@@ -30,7 +39,7 @@ ngOnInit() {
           this.name = user.name;
           localStorage.setItem("name", this.name);
         });
-}
+    }
 
   searchText = '';
   selectedCategory = '';
@@ -96,29 +105,78 @@ ngOnInit() {
     console.log('home');
   }
 
-  loadEvents() {
-  fetch('http://127.0.0.1:8000/api/events/')
+  // loadEvents() {
+  // fetch('http://127.0.0.1:8000/api/events/')
+  //   .then(res => {
+  //     console.log('📥 Response status:', res.status);
+  //     return res.json();
+  //   })
+  //   .then(data => {
+  //     console.log('✅ Raw events from backend:', data);
+  //     const events=data.results;
+  //     this.filteredEvents = events.map((e: any) => ({
+  //       id: e.id,
+  //       title: e.title,
+  //       description: e.description,
+  //       sport: e.sport,
+  //       date: new Date(e.start_time).toLocaleString(),
+  //       location: `${e.street_address}, ${e.city}, ${e.country}`,
+  //       spaces: e.max_participants,
+  //       host: "Student",
+  //       hostInitials: "ST",
+  //       rating: 4.5,
+  //       image: null,
+  //     }));
+  //   })}
+
+  loadEvents(url: string = 'http://127.0.0.1:8000/api/events/') {
+  fetch(url, {
+    headers: {
+      Authorization: `Bearer ${this.token}`  // 🔥 IMPORTANT
+    }
+  })
     .then(res => {
       console.log('📥 Response status:', res.status);
       return res.json();
     })
     .then(data => {
       console.log('✅ Raw events from backend:', data);
-      const events=data.results;
-      this.filteredEvents = events.map((e: any) => ({
+
+      this.totalEvents = data.count;
+      this.nextPage = data.next;
+      this.previousPage = data.previous;
+
+      this.filteredEvents = data.results.map((e: any) => ({
         id: e.id,
         title: e.title,
         description: e.description,
         sport: e.sport,
         date: new Date(e.start_time).toLocaleString(),
         location: `${e.street_address}, ${e.city}, ${e.country}`,
-        spaces: e.max_participants,
-        host: "Student",
-        hostInitials: "ST",
+        spaces: e.max_participants-e.participants.length,
+        host: e.creator_name,
+        hostInitials: e.creator_name
+          .split(" ")
+          .map((n: string) => n[0])
+          .join("")
+          .toUpperCase(),
         rating: 4.5,
         image: null,
       }));
-    })}
+    });
+}
+
+  goToNextPage() {
+  if (this.nextPage) {
+    this.loadEvents(this.nextPage);
+  }
+}
+
+goToPreviousPage() {
+  if (this.previousPage) {
+    this.loadEvents(this.previousPage);
+  }
+}
 
   toggleLogin() {
     console.log('login/logout');

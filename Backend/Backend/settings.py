@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'Users',
     'Events',
+    'Feedback',
     'phonenumber_field',
     "django_filters",
 ]

@@ -123,11 +123,31 @@
         </div>
 
         <span class="spaces-badge">
-          👥 {{ event.spaces }} locuri
+          👥 {{ event.max_participants }} locuri
         </span>
 
       </div>
 
+      
     </div>
+
+  
   </div>
+
+  
+  
 } @empty {}
+
+<div class="pagination">
+  <button class="pagination-btn"
+          (click)="goToPreviousPage()"
+          [disabled]="!previousPage">
+    ← Previous
+  </button>
+
+  <button class="pagination-btn"
+          (click)="goToNextPage()"
+          [disabled]="!nextPage">
+    Next →
+  </button>
+</div>

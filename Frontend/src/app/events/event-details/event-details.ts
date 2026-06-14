@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TitleCasePipe, UpperCasePipe, DatePipe} from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-event-details',
@@ -11,10 +12,11 @@ import { ActivatedRoute } from '@angular/router';
 export class EventDetails implements OnInit{
   eventId!: string | null;
 
+  token!: string | null;
+
   // 2. Injectează serviciul în constructor
-  constructor(private route: ActivatedRoute , private cdr: ChangeDetectorRef) {
-    
-  }
+  constructor(private route: ActivatedRoute , private cdr: ChangeDetectorRef, private router:Router) {}
+
 
   event = {
   title: '',
@@ -27,7 +29,7 @@ export class EventDetails implements OnInit{
   max_participants: 1,
   skill_level: 'beginner',
   creator: 'Hardcoded name',
-  no_of_joined_participants: 1,
+  participants: []
 };
   
   
@@ -36,10 +38,11 @@ export class EventDetails implements OnInit{
     
     console.log('ID-ul extras este:', this.eventId);
 
-    this.loadEvents();
+    this.loadEvent();
   }
 
-  loadEvents() {
+
+  loadEvent() {
   fetch('http://127.0.0.1:8000/api/events/' + this.eventId)
     .then(res => {
       console.log('📥 Response status from event details:', res.status);
@@ -52,8 +55,39 @@ export class EventDetails implements OnInit{
       this.cdr.detectChanges();
     })}
 
-  onJoinMatch(): void {
+
+  toastMessage: string = '';
+  showToastVisible = false;
+
+  showToast(message: string) {
+    console.log("show toast");
+    this.toastMessage = message;
+    this.showToastVisible = true;
+
+    setTimeout(() => {
+        this.showToastVisible=false;
+      }, 2000);
+  }
+  
+  onJoinMatch() {
    console.log(`User joined the match for event: ${this.event.title}`);
-    // Aici rulezi logica ta de fetch/POST pentru înscriere
+   this.token = localStorage.getItem('accessToken');
+    fetch(`http://127.0.0.1:8000/api/events/${this.eventId}/join/`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${this.token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json())
+    .then(() => {
+
+      this.showToast("🎉 You successfully joined the event!");
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.router.navigate(['/home']);
+      }, 3000);
+    });
 }
 }
+
