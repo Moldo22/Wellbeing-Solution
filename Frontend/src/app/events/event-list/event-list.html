@@ -11,7 +11,8 @@
 
     <div class="user">
       <div class="info">
-        <p>{{ this.name }}</p>
+        
+        <p (click)="goToProfile()">{{ this.name }}</p>
         
         <span>Universitatea Cluj</span>
       </div>
@@ -31,15 +32,15 @@
     </div>
 
     <div class="filters">
-      <input type="text" [(ngModel)]="searchText" placeholder="Caută evenimente..." />
+      <input type="text" [(ngModel)]="searchText"  (ngModelChange)="applyFilters()" placeholder="Caută evenimente..." />
 
-      <select [(ngModel)]="selectedCategory">
+      <select [(ngModel)]="selectedCategory"  (ngModelChange)="applyFilters()">
         @for (c of categories; track c.value) {
           <option [value]="c.value">{{ c.label }}</option>
         }
       </select>
 
-      <select [(ngModel)]="selectedDate">
+      <select [(ngModel)]="selectedDate" (ngModelChange)="applyFilters()">
         @for (d of dateOptions; track d.value) {
           <option [value]="d.value">{{ d.label }}</option>
         }
@@ -95,12 +96,12 @@
   <div class="card-mini" (click)="openEventDetails(event)">
 
     <div class="card-thumbnail">
-      <img [src]="event.image" alt="event image" />
+      <img [src]="getSportImage(event.sport)" alt="event image" />
     </div>
 
     <div class="card-details">
 
-      <h3>{{ event.title }}</h3>
+      <!-- <h3>{{ event.title }}</h3> -->
 
       <div class="meta-inline">
         <span>📅 {{ event.date }}</span>
@@ -108,7 +109,7 @@
       </div>
 
       <p class="desc">
-        {{ event.description }}
+        {{ event.title }}
       </p>
 
       <div class="card-footer-mini">
@@ -123,7 +124,7 @@
         </div>
 
         <span class="spaces-badge">
-          👥 {{ event.max_participants }} locuri
+           {{ event.spaces }} locuri disponibile
         </span>
 
       </div>

@@ -1,6 +1,7 @@
 import { Component,ChangeDetectorRef  } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Profile {
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private router:Router) {}
 
   token = localStorage.getItem('accessToken');
 
@@ -92,6 +93,13 @@ ngOnInit(): void {
 
       this.user.upcoming_events = data.upcoming_events;
       this.user.past_events = data.past_events;
+
+      this.user.upcoming_events = this.user.upcoming_events.map((event: any) => {
+        return {
+          ...event,
+          start_time: new Date(event.start_time).toISOString().slice(0, 16).replace('T', ' ')
+        };
+      });
       this.cdr.detectChanges();
 
     });
@@ -150,6 +158,10 @@ submitReviews() {
       this.showReviewDialog = false;
       this.showToast("Feedback submitted successfully!");
     });
+}
+
+goToSubscriptions() {
+  this.router.navigate(['/subscriptions']);
 }
 
 }

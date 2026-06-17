@@ -10,18 +10,18 @@
   <div class="profile">
 
     <div class="cover">
-      <img src="cover.jpg" alt="Cover">
+      <img src="/assets/profile_wallpaper.jpg" alt="Cover">
     </div>
 
     <div class="content">
 
       <div class="header">
-        <img class="avatar" src="avatar.jpg" alt="Avatar">
+        <img class="avatar" src="/assets/profile_pic.jpg" alt="Avatar">
 
         <div class="info">
           <div class="name-row">
             <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-            <span class="role-badge">Admin</span>
+            
           </div>
           <p>{{ user.email }}</p>
           <p>{{user.bio}}</p>
@@ -91,16 +91,27 @@
           </div>
         </div>
 
-        <!-- <div class="column">
-          <div class="section">
-            <div class="section-header-web">
-              <h2>Recent Events</h2>
-              <button class="btn-download" title="Descarcă trenduri, istoric activitate și statistici">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4M7 10l5 5 5-5M12 15V3"/></svg>
-                Export Analytics
-              </button>
-            </div>
+         <div class="column">
+  <div class="section">
+    <div class="section-header-web">
+      <h2>Trends</h2>
+      <button class="btn-download" (click)="goToSubscriptions()" title="Descarcă trenduri, istoric activitate și statistici">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4M7 10l5 5 5-5M12 15V3"/>
+        </svg>
+        Export Analytics
+      </button>
+    </div>
 
+    <div class="trends-content">
+      <p>
+         Track event popularity, user engagement, and participation trends over time.
+      </p>
+    </div>
+
+  </div>
+</div>
+<!--
             <div class="event">
               <h3>Morning Run</h3>
               <p>5km run in the park with friends.</p>
@@ -169,6 +180,7 @@
                   <small>
                     {{ event.sport }} •
                     {{ event.start_time | date:'medium' }} •
+                    <!-- new Date(e.start_time).toISOString().slice(0, 16).replace('T', ' '), -->
                     {{ event.city }}
                   </small>
                 </div>

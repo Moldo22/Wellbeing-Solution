@@ -25,6 +25,7 @@ export class EventList implements OnInit, OnDestroy {
 
 
 ngOnInit() {
+  
   this.startAutoPlay();
   this.loadEvents();
  
@@ -44,17 +45,23 @@ ngOnInit() {
   searchText = '';
   selectedCategory = '';
   selectedDate = '';
+  events: any[] = [];
   filteredEvents: any[] = [];
 
   categories = [
-    { label: 'Toate', value: '' },
-    { label: 'Fotbal', value: 'football' },
-    { label: 'Tenis', value: 'tennis' }
+    { label: 'All Sports', value: '' },
+    { label: 'Fotball', value: 'football' },
+    { label: 'Tennis', value: 'tennis' },
+    { label: 'Basketball', value: 'basketball' },
+    { label: 'Volleyball', value: 'volleyball' },
+    { label: 'Running', value: 'running' },
+
   ];
 
   dateOptions = [
-    { label: 'Astăzi', value: 'today' },
-    { label: 'Săptămâna asta', value: 'week' }
+    { label: 'Any Time', value: '' },
+    { label: 'Today', value: 'today' },
+    { label: 'This week', value: 'week' }
   ];
 
   // filteredEvents = [
@@ -146,12 +153,13 @@ ngOnInit() {
       this.nextPage = data.next;
       this.previousPage = data.previous;
 
-      this.filteredEvents = data.results.map((e: any) => ({
+      this.events = data.results.map((e: any) => ({
         id: e.id,
         title: e.title,
         description: e.description,
         sport: e.sport,
-        date: new Date(e.start_time).toLocaleString(),
+        date: new Date(e.start_time).toISOString().slice(0, 16).replace('T', ' '),
+        //date: new Date(e.start_time),
         location: `${e.street_address}, ${e.city}, ${e.country}`,
         spaces: e.max_participants-e.participants.length,
         host: e.creator_name,
@@ -162,7 +170,9 @@ ngOnInit() {
           .toUpperCase(),
         rating: 4.5,
         image: null,
-      }));
+      })
+    );
+    this.applyFilters();
     });
 }
 
@@ -180,7 +190,8 @@ goToPreviousPage() {
 
   toggleLogin() {
     console.log('login/logout');
-    this.router.navigate(['/login']);
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
   toggleCreateForm() {
@@ -227,4 +238,73 @@ currentSlide: number = 0;
 
   openPromo(index: number) { 
     console.log('Utilizatorul a apăsat pe detalii pentru reclama:', index); 
-  }}
+  }
+
+  applyFilters() {
+    const now = new Date();
+
+    this.filteredEvents = this.events.filter(event => {
+
+      // NAME FILTER
+      const matchesName =
+        !this.searchText ||
+        event.title.toLowerCase().includes(this.searchText.toLowerCase());
+
+      // SPORT FILTER
+      const matchesSport =
+        !this.selectedCategory ||
+        event.sport === this.selectedCategory;
+
+      // TIME FILTER
+      let matchesTime = true;
+
+      if (this.selectedDate === 'today') {
+        const eventDate = new Date(event.date);
+        //console.log("event date");
+        //console.log(event.date.toDateString() + " " + now.toDateString());
+        matchesTime = eventDate.toDateString() === now.toDateString();
+      }
+
+      if (this.selectedDate === 'week') {
+        const eventDate = new Date(event.date);
+
+        const now = new Date();
+        const weekAhead = new Date();
+        weekAhead.setDate(now.getDate() + 7);
+
+        matchesTime = eventDate >= now && eventDate <= weekAhead;
+      }
+
+      return matchesName && matchesSport && matchesTime;
+    });
+  }
+
+  getSportImage(sport: string): string {
+    // console.log("sport");
+    // console.log(sport);
+  switch (sport?.toLowerCase()) {
+    case 'football':
+      return 'assets/football.jpg';
+
+    case 'basketball':
+      return 'assets/basketball.jpg';
+
+    case 'tennis':
+      return 'assets/tennis.jpg';
+
+    case 'volleyball':
+      return 'assets/volleyball.jpg';
+
+    case 'running':
+      return 'assets/running.jpg';
+
+    default:
+      return 'assets/default.jpg';
+  }
+}
+goToProfile() {
+  //console.log()
+  this.router.navigate(['/../profile']);
+}
+
+}

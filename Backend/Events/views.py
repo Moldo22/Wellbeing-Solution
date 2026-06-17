@@ -7,6 +7,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
+import pytz
+
 
 from .models import Event
 from .serializers import EventReadSerializer, EventCreateSerializer
@@ -31,7 +33,9 @@ class EventListView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
 
-        queryset = Event.objects.all()
+        #queryset = Event.objects.all()
+        #queryset = Event.objects.all().order_by("-start_time")
+        queryset = Event.objects.filter(start_time__gte=timezone.now()).order_by("start_time")
 
         # 🔥 EXCLUDE events where user already joined
         if user.is_authenticated:
@@ -98,13 +102,16 @@ class UserEventsView(generics.GenericAPIView):
 
     def get(self, request):
         user = request.user
-        now = timezone.now()
 
+        tz = pytz.timezone('Europe/Bucharest')
+        now = timezone.now().astimezone(tz)
+        #now = timezone.now()
+        print(now)
         created = Event.objects.filter(creator=user)
         joined = Event.objects.filter(participants=user)
-
-        upcoming = joined.filter(start_time__gte=now)
-        past = joined.filter(start_time__lt=now)
+        
+        upcoming = joined.filter(start_time__gte=now.astimezone(pytz.UTC))
+        past = joined.filter(start_time__lt=now.astimezone(pytz.UTC))
 
         return Response({
             "events_created": created.count(),
