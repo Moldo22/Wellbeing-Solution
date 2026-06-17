@@ -1,0 +1,138 @@
+<div class="subscription-page">
+  
+  <header class="main-header">
+    <span class="step-indicator">Portal Parteneri B2B</span>
+    <h1>Promovați-vă afacerea direct în comunitățile de sportivi</h1>
+    <p class="subtitle">
+      Platforma noastră stochează locațiile, tipurile de sport și numărul de participanți de la fiecare meci organizat. Alegeți pachetul potrivit pentru a vă afișa ofertele direct în fața clienților ideali.
+    </p>
+  </header>
+
+  <main class="content-container">
+    
+    <section class="step-section">
+      <div class="step-number">PASUL 1</div>
+      <h2>Cum doriți să faceți plata?</h2>
+      
+      <div class="billing-selection">
+        <button class="billing-btn" [class.active]="!isAnnual" (click)="isAnnual = false">
+          <span class="radio-circle" [class.checked]="!isAnnual"></span>
+          <span class="billing-text-main">Plată Lunară (Standard)</span>
+        </button>
+
+        <button class="billing-btn" [class.active]="isAnnual" (click)="isAnnual = true">
+          <span class="radio-circle" [class.checked]="isAnnual"></span>
+          <span class="billing-text-main">Plată Anuală <small class="discount-pill">Primiți 2 luni Gratuit</small></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="step-section">
+      <div class="step-number">PASUL 2</div>
+      <h2>Selectați nivelul de acces și promovare</h2>
+      
+      <div class="plans-container">
+        
+        <article class="plan-card">
+          <div class="plan-header">
+            <h3>Local Radar</h3>
+            <div class="target-audience-box">
+              <strong>RECOMANDAT PENTRU:</strong> Proprietari de terenuri (Fotbal/Tenis) sau antrenori locali.
+            </div>
+          </div>
+          
+          <div class="plan-price">
+            <strong class="price-amount">{{ getPrice('local') }} €</strong>
+            <span class="price-period">{{ billingPeriodText }}</span>
+            <div *ngIf="isAnnual" class="save-badge-clean">
+              ✓ Economisiți {{ getSavings('local') }} € chiar acum
+            </div>
+          </div>
+          
+          <ul class="plan-benefits-list">
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Harta activităților:</strong> Vedeți ce meciuri se organizează în zona dumneavoastră.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Tipul de sport:</strong> Știți exact dacă utilizatorii aleg fotbal, tenis sau fitness.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Afișare ofertă:</strong> Puteți posta o ofertă de bază direct pe harta aplicației.</span></li>
+            <li class="disabled"><span class="benefit-icon no">✗</span> <span><strong>Număr participanți:</strong> Nu vedeți câți jucători s-au înscris la meci.</span></li>
+            <li class="disabled"><span class="benefit-icon no">✗</span> <span><strong>Note jucători:</strong> Nu aveți acces la recenziile dintre participanți.</span></li>
+          </ul>
+
+          <button class="cta-button" (click)="selectPlan('Local Radar', 'local')">Vreau Local Radar</button>
+        </article>
+
+        <article class="plan-card recommended-card">
+          <div class="recommended-badge">CEL MAI POPULAR PENTRU SĂLI ȘI MAGAZINE</div>
+          
+          <div class="plan-header">
+            <h3>Pro Target Engine</h3>
+            <div class="target-audience-box highlighted">
+              <strong>RECOMANDAT PENTRU:</strong> Săli de fitness, furnizori de suplimente și magazine de articole sportive.
+            </div>
+          </div>
+          
+          <div class="plan-price">
+            <strong class="price-amount-large">{{ getPrice('pro') }} €</strong>
+            <span class="price-period-large">{{ billingPeriodText }}</span>
+            <div *ngIf="isAnnual" class="save-badge-clean savings-highlight">
+              ✓ Economisiți {{ getSavings('pro') }} € chiar acum
+            </div>
+          </div>
+          
+          <ul class="plan-benefits-list">
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Număr participanți:</strong> Vedeți exact câți oameni vin la fiecare eveniment creat.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Seriozitate jucători:</strong> Vedeți recenziile și notele pe care utilizatorii și le dau între ei.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Oferte în aplicație:</strong> Vă afișați cupoanele sau promoțiile direct în pagina meciului.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Publicitate la fix:</strong> Utilizatorii văd oferta dvs. exact când organizează sau participă la un meci.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Locații exacte:</strong> Știți în ce cartiere și pe ce terenuri se joacă cel mai des.</span></li>
+          </ul>
+
+          <button class="cta-button primary-cta" (click)="selectPlan('Pro Target Engine', 'pro')">Pornește promovarea Pro</button>
+        </article>
+
+        <article class="plan-card">
+          <div class="plan-header">
+            <h3>Market Dominator</h3>
+            <div class="target-audience-box">
+              <strong>RECOMANDAT PENTRU:</strong> Branduri sportive mari sau lanțuri naționale de săli de sport.
+            </div>
+          </div>
+          
+          <div class="plan-price">
+            <strong class="price-amount">{{ getPrice('enterprise') }} €</strong>
+            <span class="price-period">{{ billingPeriodText }}</span>
+            <div *ngIf="isAnnual" class="save-badge-clean">
+              ✓ Economisiți {{ getSavings('enterprise') }} € chiar acum
+            </div>
+          </div>
+          
+          <ul class="plan-benefits-list">
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Toate locațiile:</strong> Acces total la datele și meciurile din absolut toate orașele țării.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Campanii automate:</strong> Sistemul afișează automat oferta dvs. când un meci nou este creat.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Analiză recenzii:</strong> Vedeți ce note își dau jucătorii pentru a identifica cele mai serioase comunități.</span></li>
+            <li><span class="benefit-icon yes">✓</span> <span><strong>Asistență directă:</strong> Primiți ajutor la configurarea campaniilor din partea echipei noastre.</span></li>
+          </ul>
+
+          <button class="cta-button" (click)="selectPlan('Market Dominator', 'enterprise')">Vreau Market Dominator</button>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="step-section">
+      <div class="step-number">PASUL 3</div>
+      <h2>Cum vă ajută aceste date în mod practic?</h2>
+      
+      <div class="faq-grid">
+        <div class="faq-box">
+          <h3>Cum ajunge oferta mea la sportivi?</h3>
+          <p>Dacă aveți o sală de sport sau vindeți suplimente, pachetul <strong>Pro Target</strong> vă permite să adăugați o reducere în platformă. Când un grup de utilizatori creează un meci în apropierea locației dumneavoastră, aplicația le afișează automat oferta (ex: reducere la băuturi izotonice sau ședințe) direct în ecranul lor de organizare.</p>
+        </div>
+        <div class="faq-box">
+          <h3>La ce folosesc recenziile dintre participanți?</h3>
+          <p>După fiecare meci, utilizatorii noștri își oferă note unii altora (pentru punctualitate și comportament). Pachetul Pro vă oferă acces la aceste date agregate. Astfel, puteți alege să vă afișați ofertele cu prioritate către grupurile de sportivi constanți și serioși, crescând șansele de a atrage clienți fideli.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>

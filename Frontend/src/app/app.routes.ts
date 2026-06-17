@@ -5,6 +5,7 @@ import { EventList } from './events/event-list/event-list';
 import { EventCreate} from './events/event-create/event-create';
 import {EventDetails} from './events/event-details/event-details';
 import { Profile } from './profile/profile';
+import { Subscriptions } from './subscriptions/subscriptions';
 
 export const routes: Routes = [
     { path: 'home', component: EventList }, 
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: 'register', component: Register },
     { path: 'profile', component: Profile},
     { path: 'event/create', component: EventCreate},
-    { path: 'event/details/:id', component: EventDetails}
+    { path: 'event/details/:id', component: EventDetails},
+    { path: 'subscriptions', component: Subscriptions}
 ];

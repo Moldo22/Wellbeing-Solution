@@ -1,0 +1,459 @@
+/* ==========================================================================
+   ANGULAR SPORTCONNECT - HIGH-ACCESSIBILITY UI/UX DESIGN SYSTEM
+   ========================================================================== */
+
+/* 1. CONTAINER GENERAL ȘI LIZIBILITATE MAXIMĂ */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0c111d;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.subscription-page {
+  background-color: #0c111d;
+  color: #ffffff;
+  padding: 50px 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.content-container {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+/* Tranziții rapide și sigure pentru feedback vizual mecanic instantaneu */
+.billing-btn, 
+.plan-card, 
+.cta-button,
+.faq-box,
+.radio-circle {
+  transition: transform 0.12s ease-in-out, 
+              background-color 0.12s ease-in-out, 
+              border-color 0.12s ease-in-out, 
+              box-shadow 0.12s ease-in-out;
+}
+
+/* INTRODUCERE PAGINĂ */
+.main-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.step-indicator {
+  color: #38bdf8;
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.main-header h1 {
+  font-size: 42px;
+  font-weight: 900;
+  margin: 0 0 20px 0;
+  line-height: 1.3;
+}
+
+.main-header .subtitle {
+  font-size: 21px;
+  color: #cbd5e1;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* STRUCTURA PE PAȘI CRONOLOGICI */
+.step-section {
+  background: #161e31;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 45px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.step-number {
+  background: #38bdf8;
+  color: #070a12;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.step-section h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 32px 0;
+}
+
+/* ==========================================================================
+   PASUL 1: INTERFAȚĂ SELECȚIE PLATĂ (Mecanică Angular corectată)
+   ========================================================================== */
+.billing-selection {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+
+@media (min-width: 720px) {
+  .billing-selection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.billing-btn {
+  background: #1e293b;
+  border: 2px solid #475569;
+  border-radius: 18px;
+  padding: 26px;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.billing-text-main {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.discount-pill {
+  background: #10b981;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+/* Stări de Hover și Active controlate din Angular */
+.billing-btn:hover {
+  background-color: #243249;
+  border-color: #38bdf8;
+}
+
+.billing-btn.active {
+  border-color: #38bdf8;
+  background-color: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 0 2px #38bdf8;
+}
+
+.billing-btn.active:hover {
+  background-color: rgba(56, 189, 248, 0.15);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.4);
+}
+
+/* Cercul Radio din interior */
+.radio-circle {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #475569;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
+  background: #0f172a;
+}
+
+.billing-btn:hover .radio-circle {
+  border-color: #38bdf8;
+}
+
+.radio-circle.checked::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 12px;
+  height: 12px;
+  background: #38bdf8;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+/* ==========================================================================
+   PASUL 2: RESTILIZARE TEXT CARDURI (Ierarhie vizuală anti-oboseală)
+   ========================================================================== */
+.plans-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+}
+
+@media (min-width: 980px) {
+  .plans-container {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+  }
+}
+
+.plan-card {
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 22px;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+  border-color: #38bdf8;
+  background-color: #243249;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+}
+
+/* Evidențiere masivă card recomandat */
+.plan-card.recommended-card {
+  border: 4px solid #f59e0b;
+  background: #243249;
+  box-shadow: 0 15px 35px rgba(245, 158, 11, 0.1);
+}
+
+@media (min-width: 980px) {
+  .plan-card.recommended-card { transform: scale(1.03); }
+  .plan-card.recommended-card:hover { transform: scale(1.05) translateY(-6px); }
+}
+
+.plan-card.recommended-card:hover {
+  border-color: #fbbf24;
+  background-color: #2a3b57;
+  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f59e0b;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 20px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+/* CASETA DE AUDIENȚĂ ȚINTĂ (Rezolvă problema textului împrăștiat) */
+.target-audience-box {
+  background-color: #121824;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #e2e8f0;
+}
+
+.target-audience-box strong {
+  color: #38bdf8;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.target-audience-box.highlighted {
+  background-color: #1a2436;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.target-audience-box.highlighted strong {
+  color: #f59e0b;
+}
+
+.plan-header h3 {
+  font-size: 28px;
+  font-weight: 900;
+  margin: 0;
+  color: #ffffff;
+}
+
+/* Zona de prețuri */
+.plan-price {
+  margin: 26px 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 22px;
+}
+
+.price-amount {
+  font-size: 52px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.price-amount-large {
+  font-size: 60px;
+  font-weight: 900;
+  color: #f59e0b;
+}
+
+.price-period, .price-period-large {
+  font-size: 17px;
+  color: #cbd5e1;
+  margin-left: 6px;
+}
+
+/* LISTA DE BENEFICII - Text mare, alb complet, cuvinte cheie îngroșate */
+.plan-benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+
+.plan-benefits-list li {
+  font-size: 16.5px; /* Mărit pentru citire extrem de relaxantă */
+  line-height: 1.5;
+  color: #ffffff; /* Contrast maxim - alb pur */
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.plan-benefits-list li strong {
+  color: #ffffff;
+  font-weight: 800; /* Evidențiere puternică pe acțiune */
+}
+
+.benefit-icon {
+  font-weight: 900;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.benefit-icon.yes { color: #10b981; }
+.benefit-icon.no { color: #ef4444; }
+
+.plan-benefits-list li.disabled {
+  color: #57657a; /* Gri ponderat pentru funcții dezactivate */
+}
+.plan-benefits-list li.disabled strong {
+  color: #57657a;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   BUTOANELE CTA ȘI HOVER FUNCTIONAL COMPLET
+   ========================================================================== */
+.cta-button {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  font-size: 18px;
+  font-weight: 900;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #ffffff;
+}
+
+.cta-button:hover {
+  background-color: #38bdf8;
+  border-color: #38bdf8;
+  color: #000000;
+  transform: scale(1.02);
+}
+
+.cta-button:active {
+  transform: scale(0.98);
+  background-color: #0284c7;
+  border-color: #0284c7;
+}
+
+.cta-button.primary-cta {
+  background-color: #f59e0b;
+  color: #000000;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.3);
+}
+
+.cta-button.primary-cta:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+}
+
+.cta-button.primary-cta:active {
+  transform: scale(0.98);
+  background-color: #d97706;
+  border-color: #d97706;
+  box-shadow: none;
+}
+
+/* ZONA FAQ (PASUL 3) */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 24px;
+}
+
+@media (min-width: 780px) {
+  .faq-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.faq-box {
+  background: #1e293b;
+  border-radius: 18px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.faq-box:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: #243249;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.faq-box h3 {
+  font-size: 20px;
+  color: #ffffff;
+  margin: 0 0 14px 0;
+  font-weight: 800;
+}
+
+.faq-box p {
+  font-size: 16.5px;
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* RESPONSIVE MOBIL */
+@media (max-width: 979px) {
+  .plan-card.recommended-card { margin: 20px 0; }
+  .main-header h1 { font-size: 32px; }
+  .step-section { padding: 28px 20px; }
+  .step-section h2 { font-size: 24px; }
+}
