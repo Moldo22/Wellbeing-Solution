@@ -1,10 +1,28 @@
 /* Containerul principal respectă tema generală a workspace-ului */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0b0f19 !important;
+}
+
+:host-context(body) {
+  background-color: #0b0f19 !important;
+}
+
+/* Dacă elementul tău are un alt container părinte în app.component.html */
+:host {
+  display: block;
+  background-color: #0b0f19;
+  min-height: 100vh;
+}
+
+
 .event-details-container {
-  max-width: 1200px;
-  margin: 40px auto;
+ max-width: 1200px;
+  margin: 0 auto;            /* Am schimbat de la 40px la 0 ca să se lipească de tavan pe ecrane mari */
   background: #111625; 
-  min-height: 85vh;
-  border-radius: 20px;
+  min-height: 100vh;         /* Schimbat de la 85vh la 100vh ca să acopere toată înălțimea ecranului */
+  border-radius: 0;          /* Scoatem colțurile rotunjite exterioare dacă vrem să fie full-bleed pe desktop */
   padding: 40px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.03);

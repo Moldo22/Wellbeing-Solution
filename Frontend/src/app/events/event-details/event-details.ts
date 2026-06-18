@@ -28,8 +28,9 @@ export class EventDetails implements OnInit{
   country: 'Romania',
   max_participants: 1,
   skill_level: 'beginner',
-  creator: 'Hardcoded name',
-  participants: []
+  creator_name: 'Hardcoded name',
+  participants: [],
+  host_initials: ''
 };
   
   
@@ -52,6 +53,12 @@ export class EventDetails implements OnInit{
       console.log('✅ Raw events from backend:', data);
       
       this.event = data;
+      this.event.start_time = new Date(this.event.start_time).toISOString().slice(0, 16).replace('T', ' ')
+      this.event.host_initials = this.event.creator_name
+      ?.split(' ')
+      .map(name => name.charAt(0))
+      .join('')
+      .toUpperCase();
       this.cdr.detectChanges();
     })}
 

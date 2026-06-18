@@ -110,8 +110,8 @@ class UserEventsView(generics.GenericAPIView):
         created = Event.objects.filter(creator=user)
         joined = Event.objects.filter(participants=user)
         
-        upcoming = joined.filter(start_time__gte=now.astimezone(pytz.UTC))
-        past = joined.filter(start_time__lt=now.astimezone(pytz.UTC))
+        upcoming = joined.filter(start_time__gte=now)
+        past = joined.filter(start_time__lt=now)
 
         return Response({
             "events_created": created.count(),

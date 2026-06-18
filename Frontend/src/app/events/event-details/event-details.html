@@ -61,6 +61,14 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               <span>{{ event.start_time ? (event.start_time | date:'HH:mm') : '--:--' }}</span>
             </div>
+
+            <div class="time-big">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L15 8L22 9L17 14L18 22L12 19L6 22L7 14L2 9L9 8L12 2Z"/>
+              </svg>
+              <span>{{ event.skill_level || 'All Levels' | titlecase}}</span>
+            </div>
+
           </div>
 
           <hr class="widget-divider" />
@@ -76,10 +84,10 @@
           </div>
 
           <div class="organizer-box">
-            <div class="avatar">AP</div>
+            <div class="avatar">{{ event.host_initials }}</div>
             <div class="org-details">
               <small>Hosted by</small>
-              <strong>{{ event.creator }}</strong>
+              <strong>{{ event.creator_name }}</strong>
             </div>
           </div>
 
